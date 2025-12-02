@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Login</title>
+    <style>
+      body {
+        background: linear-gradient(135deg, #000000, #0a0f1f, #001f2d);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: white;
+        display: flex;
+        padding: 40px;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        animation: fadeIn 1.2s ease-in-out;
+      }
+
+      .login-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 50px;
+      }
+
+      .login-box {
+        background: rgba(0, 0, 0, 0.85);
+        padding: 32px;
+        border-radius: 15px;
+        justify-content: center;
+        border: 1px solid cyan;
+        box-shadow: 0 0 12px rgba(0, 255, 255, 0.2);
+        width: 350px;
+        max-width: 90%;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .login-box:hover {
+        transform: scale(1.03);
+        box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+      }
+
+      h2 {
+        text-align: center;
+        color: cyan;
+        letter-spacing: 1px;
+        text-shadow: 0 0 3px cyan;
+      }
+
+      input[type="text"],
+      input[type="password"] {
+        width: 100%;
+        padding: 12px;
+        margin: 12px 0;
+        border: none;
+        border-radius: 8px;
+        font: inherit;
+        box-sizing: border-box;
+        background: rgba(255, 255, 255, 0.95);
+        color: black;
+        transition: all 0.3s ease;
+      }
+      input[type="text"]:focus,
+      input[type="password"]:focus {
+        outline: none;
+        border: 1px solid cyan;
+        box-shadow: 0 0 6px rgba(0, 255, 255, 0.4);
+      }
+
+      /* Buttons */
+      button {
+        width: 100%;
+        padding: 12px;
+        background: linear-gradient(90deg, cyan, #00ffaa);
+        color: black;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: bold;
+        font: inherit;
+        margin-top: 16px;
+        transition: all 0.3s ease;
+      }
+      button:hover {
+        background: linear-gradient(90deg, #00ffaa, cyan);
+        transform: translateY(-1px);
+        box-shadow: 0 0 8px rgba(0, 255, 255, 0.4);
+      }
+
+      .click {
+        background: transparent;
+        border: 1px solid cyan;
+        color: cyan;
+        transition: all 0.3s ease;
+      }
+      .click:hover {
+        background: cyan;
+        color: black;
+        box-shadow: 0 0 6px rgba(0, 255, 255, 0.4);
+      }
+
+      .name {
+        text-align: center;
+        color: cyan;
+        font-size: 1.5rem;
+        line-height: 1.4;
+        text-shadow: 0 0 4px rgba(0, 255, 255, 0.6);
+      }
+      .info {
+        margin: 0;
+        font-family: 'Share Tech Mono', monospace;
+        font-size: 40px;
+        font-weight: bold;
+        color: whitesmoke;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        text-shadow: 0 0 6px rgba(0, 255, 255, 0.6);
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: scale(0.97);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="login-container">
+      <form class="login-box" method="POST" action="/login">    
+        <h2>Login</h2>
+        <input type="text" name="Username" placeholder="Username" required />   <!-- type="date" tells the browser what kind of input field this should be. -->
+        <input type="password" name="password" placeholder="Password" required />
+        <button class="click">SIGN UP</button>
+        <button class="click">SIGN IN</button>
+      </form>
+
+      <div class="name">
+        <h2 class="name"><strong>HANDS ON ROBOTICS</strong></h2>
+        <p>By <b>Robotics Club</b></p>
+        <p><b>Rajsekhar Singh</b></p>
+      </div>
+    </div>
+    <script></script>
+  </body>
+</html>

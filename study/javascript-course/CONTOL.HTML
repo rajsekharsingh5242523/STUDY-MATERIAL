@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Contol Bot</title>
+        <style>
+            body{
+                padding-top: 20px;
+                font-family:Arial,sans-serif;
+                color: whitesmoke;
+                background-color:black;
+                display:flex;   /*Flexbox --Works in one dimension → either a row (horizontal) or a column (vertical).*/
+                font-size:1.5rem;
+                flex-direction:column;
+                align-items:center;
+                margin:0;
+                }
+            h1{
+                text-align: center;
+                color:cyan;
+            }
+            .button,.info{
+                background-color: dimgrey;
+                color:cyan;
+                margin-bottom: 10px;
+            }
+            .button-container{
+                display:grid;       /*Grid -- Works in two dimensions → rows and columns together.*/
+                grid-template-columns:1fr 1fr 1fr;
+                grid-template-rows:1fr 1fr 1fr;
+                gap:10px;
+                width:300px;
+                height:300px;       
+                margin-bottom:30px;
+            }
+            .button{
+                padding:15px 30px;
+                font-size:16px;
+                font-weight:bold;
+                background:black;
+                color: cyan;
+                border:2px solid cyan;
+                border-radius: 12px;
+                cursor:pointer;
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                text-decoration:none;
+                transition:all 0.2s;
+            }
+            .button:hover{          /* :hover → This is a pseudo-class that applies the style only when the user moves the mouse pointer over the element. */
+                background-color:    cyan;
+                color: #000;
+                box-shadow:0 6px 15px rgba(0,255,180,0.5);        /* 0 → horizontal offset (no left-right shift) 6px → vertical offset (shadow falls 6px below the button)
+                                                                    15px → blur radius (how soft/spread the shadow looks)
+
+                                                                    rgba(0,255,180,0.5) → color of the shadow (a semi-transparent greenish-cyan glow).*/    
+                transform:translateY(-8px);     /*Moves the button 8px upward when hovered, creating a "lift" effect.*/
+            }
+            .button:active{transform:translateY(0);}
+            .center-dot{
+                width:16px;
+                height:16px;
+                background-color:cyan;
+                border-radius:50%;
+                align-self:center;
+                justify-self:center; 
+            }
+            .info{
+                background-color: black;
+                margin-top:30px;
+                font-size:18px;
+                padding:15px 30px;
+                border-radius:8px;
+                color: whitesmoke;
+                border: 2px solid cyan;
+            }
+            .forward{grid-column:2;grid-row:1;}
+            .left{grid-column:1;grid-row:2;}
+            .right{grid-column:3;grid-row:2;}
+            .backward{grid-column:2;grid-row:3;}
+            .center-dot{grid-column:2;grid-row:2;}
+            .name{
+                text-align: center;
+                margin-top: 20px;
+                color: cyan;
+                font-size: 1.3rem;
+                line-height: 1.4;
+            }
+   
+           
+        </style>
+    </head>
+    <body>
+        <div class="button-container">
+            <div class="button forward" onmousedown="sendCommand('forward',true)" onmouseup="sendCommand('forward',false)" ontouchstart="sendCommand('forward',true)" ontouchend="sendCommand('forward',false)">forward</div>
+            <div class="button left  onmousedown="sendCommand('left',true)" onmouseup="sendCommand('left',false)" ontouchstart="sendCommand('left',true)" ontouchend="sendCommand('left',false)">left</div>
+            <div class="center-dot "></div>
+            <div class="button backward onmousedown="sendCommand('right',true)"  onmouseup="sendCommand('right',false)" ontouchstart="sendCommand('right',true)" ontouchend="sendCommand('right',false) ">backward</div>
+            <div class="button right  onmousedown="sendCommand('backward',true)" onmouseup="sendCommand('backward',false)" ontouchstart="sendCommand('backward',true)" ontouchend="sendCommand('backward',false) ">right</div>
+        </div>
+        <div class="info" id="distance">Loading.....</div>      <!-- Use id for one unique element.Use class for groups of elements with shared styling/behavior.-->
+        <div>
+            <p>By<b> Robotics Club</b></p>       <!-- to make it bolder use <b> -->
+        </div>
+
+        <script>
+            function updateDistance() {
+                fetch('/distance')
+                    .then(res => res.text())
+                    .then(data => {
+                        document.getElementById("distance").innerText = data;
+                    });
+            }
+            setInterval(updateDistance, 500);
+            window.onload = updateDistance;
+            // Movement handling (hold button = move, release = stop)
+            function sendCommand(cmd, isDown) {
+                fetch(isDown ? '/' + cmd : '/stop');
+            }
+        </script>
+    </body>
+
+</html>

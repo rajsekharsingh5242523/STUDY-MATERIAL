@@ -1,0 +1,189 @@
+/* ------------------------------------------------------------------ */
+/* 🌐 GENERAL PAGE STYLING */
+/* ------------------------------------------------------------------ */
+
+body {
+    background-color: #f4f4f4;  /* add background color to whole page */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;  /* font-family line ensures your page text looks modern and readable, and will work across different systems by falling back to similar fonts if needed*/
+    color: #333;  /* sets the text color for the elements applied in website */
+    padding: 40px;  /* space on all four sides of the content */
+}
+
+h2 {
+    margin-top: 40px;  /* Adds space above the heading */
+    font-size: 24px;  /* Makes the heading larger */
+    color: #000;
+    font-weight: bolder;  /* Heading color */
+}
+
+p {
+    font-size: 18px;
+    margin-bottom: 20px;  /* Adds space below the things inside <p>..</p> this but outside the thing */
+}
+
+input {
+    border-radius: 15px;
+    padding: 15px;
+}
+
+
+/* ------------------------------------------------------------------ */
+/* 🖱️ BUTTON BASE STYLING */
+/* ------------------------------------------------------------------ */
+
+button {  /* this modify the the all the general button */
+    padding: 10px 16px;  /* space inside element */
+    border: 0.5px solid grey;
+    border-radius: 25px;  /* Rounded button corners */
+    font-size: 15px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 500;
+    margin: 6px 4px;  /* space outside the element */
+    transition: background-color 0.3s ease;
+    cursor: pointer;  /* this covert the arrow to pointer when hover */
+    color: black;
+    opacity: 1;
+}
+
+
+/* ------------------------------------------------------------------ */
+/* 🎚️ TOGGLE BUTTON STYLING */
+/* ------------------------------------------------------------------ */
+
+.toggle_white {
+    color: black;
+    font-weight: bold;
+}
+
+
+/* ------------------------------------------------------------------ */
+/* 🎮 ROCK PAPER SCISSOR BUTTON STYLING */
+/* ------------------------------------------------------------------ */
+
+.buttons_black {
+    background-color: black;
+    color: whitesmoke;
+}
+
+/* Style for game buttons (ROCK PAPER SCISSOR) */
+.buttons {
+    background-color: black;
+    color: white;
+    font-size: 35px;
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+    border: 1.5px solid grey;  /* <border width> <border appearance> <border colour> */
+    margin-right: auto;
+}
+
+
+/* ------------------------------------------------------------------ */
+/* 🛑 SPECIAL BUTTON STYLES */
+/* ------------------------------------------------------------------ */
+
+/* Red button style for exit */
+.exist {
+    background-color: #d32f2f;
+    color: white;
+}
+
+/* Dark button style for cart control */
+.click {
+    background-color: #333;
+    color: white;
+}
+
+
+/* ------------------------------------------------------------------ */
+/* 🔁 BUTTON HOVER EFFECTS */
+/* ------------------------------------------------------------------ */
+
+.buttons:hover,  /* hover effect for 3 classes: */
+.click:hover,
+.exist:hover {
+    opacity: 0.9;  /* 90% opacity on hover */
+}
+
+
+/* ------------------------------------------------------------------ */
+/* 🧱 SECTION WRAPPER STYLE */
+/* ------------------------------------------------------------------ */
+
+.section {
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 40px;
+    background-color: #fff;
+}
+
+
+/* ------------------------------------------------------------------ */
+/* ▶️ YOUTUBE SUBSCRIBE STYLING */
+/* ------------------------------------------------------------------ */
+
+.js-subscribe-button {
+    border: none;
+    color: black;
+    border-radius: 50px;
+    font-weight: bold;
+}
+
+.is-Subscribed {
+    color: white;
+    background-color: #000;
+}
+
+
+/* ------------------------------------------------------------------ */
+/* 📦 AMAZON SHIPPING CALCULATOR */
+/* ------------------------------------------------------------------ */
+
+.css_Amazon_calculate_button {
+    background-color: green;
+    color: white;
+    padding-bottom: 12px;
+    padding-top: 12px;
+    font-size: 18px;
+}
+
+.js-cost-input {
+    font-size: 15px;
+    padding: 10px;
+    background-color: darkred;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+
+/* ------------------------------------------------------------------ */
+/* ✅ TODO DELETE BUTTON */
+/* ------------------------------------------------------------------ */
+
+.delete-todo-button {
+    color: black;
+    font-weight: bold;
+    padding-bottom:11px ;
+}
+
+.grid_display
+{    display: grid;      /*here this make in grid form display*/
+    grid-template-columns: 200px 150px 100px ;      /* we specify the the colum width*/
+    /* so here we specifed three colum so ever time it take 3 element if we more than 3 elements it will wrap around and we become a row incdeed of colum */ 
+    column-gap: 10px;
+    padding: 6px;
+    font-size: 15px;
+    border-radius: none;
+    row-gap: 10px;
+    align-items: center;
+}
+.input_grid_style{
+    margin-bottom: 10px;
+    align-items: stretch;
+    font-size: 15px;
+    padding: 10px;
+}

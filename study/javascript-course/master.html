@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <title>Projects: Rock Paper Scissor & Cart</title>
+
+        <link 
+            rel="stylesheet" 
+            href="master_code/master.css">
+    </head>
+
+    <body>
+
+        <!-- ==================== Rock Paper Scissor Project ==================== -->
+
+        <div class="section">         <!--<div></div>  Allows you to apply styles or scripts to multiple elements at once-->
+
+            <h2>🎮 Rock Paper Scissor</h2>
+            <p>Play against the computer!</p>
+
+            <!-- Game buttons with tooltips and actions -->
+            <button class="buttons" title="ROCK" onclick="playGame('ROCK')">✊</button>           <!--class in button add the mention style-->
+            <button class="buttons" title="PAPER" onclick="playGame('PAPER')">🖐</button>         <!--title act like tooltip when hover over the button display the following text-->
+            <button class="buttons" title="SCISSOR" onclick="playGame('SCISSOR')">✌</button>     <!--onclick says what will happen when the button is clicked-->
+
+            <!-- Results and Score Display -->
+            <p class="js-Results-display"></p>
+            <p class="js-choice-display"></p>
+            <p class="js-score-value"></p>
+
+            <button class="click" title="Reset score" onclick="resetScore()">🔁 Reset Score</button>
+        </div>
+
+
+        <!-- ==================== Cart Tracker Project ==================== -->
+
+        <div class="section">
+
+            <h2>🛒 Cart Tracker</h2>
+
+            <button 
+                class="exist" 
+                title="Close website" 
+                onclick="alert('Are you sure you want to exit the website?');">
+                Close Website
+            </button>
+
+            <input 
+                placeholder="Enter Your Name" 
+                oninput="document.querySelector('.name_display').innerText = `Hello  `+ this.value">       <!--here input is a void element-->
+
+            <p class="name_display"></p>
+
+            <!-- Multi-line Message -->
+            <p>
+                Cart Quantity<br><br>             <!---<br></br>  helps to break line-->
+                👇🏻 See the result in the browser console (press F12 or right-click > Inspect > Console)
+            </p>
+
+            <!-- Cart Buttons -->
+            <button class="click" onclick="console.log(`Cart Quantity: ${cartQty}`)">Show Quantity</button>
+
+            <button class="click" onclick="cartQty = cartQty + 1;  console.log(`Cart Quantity: ${cartQty}`)">Add to Cart</button>
+
+            <button class="click" onclick="cartQty--; console.log(`Cart Quantity: ${cartQty}`)">-1</button>
+
+            <button class="click" onclick="cartQty = cartQty + 2; console.log(`Cart Quantity: ${cartQty}`)">+2</button>
+
+            <button class="click" onclick="cartQty = cartQty + 1 ;cartQty += 1; cartQty++; console.log(`Cart Quantity: ${cartQty}`)">+3</button> <!-- or cartQty cartQty +3 || cartQty+=3  -->
+
+            <button class="click" onclick="cartQty = 0; console.log(`Cart Quantity: ${cartQty}`)">Reset Cart</button>
+        </div>
+
+
+        <!-- ==================== Amazon shipping calculator ==================== -->
+
+        <div class="section">
+
+            <h2>Amazon Shipping Calculator</h2>
+
+            <p>
+                Orders under $40 = +$10 shipping.<br><br>
+                Orders over $40 = FREE shipping.
+            </p>
+
+            <!-- Input field for order cost -->
+            <input 
+                placeholder="Cost of order" 
+                class="js-cost-input" 
+                onkeydown="console.log(event); if (event.key === 'Enter') { calculateShippingCost(); }">
+
+            <!-- here onkeydown takes data whenever a key is pressed inside the box
+            and collects this event into an event object(), so we use dot notation to navigate
+            to the key pressed. If key is 'Enter', it runs the same code as a button click -->
+
+            <!-- <input> makes a box to input things directly from the website and does not need an ending tag like </input> -->
+            <!--This shows the gray faded text inside the box when it's empty-->
+
+            <!-- Calculate button triggers shipping logic -->
+            <button class="css_Amazon_calculate_button" onclick="calculateShippingCost()">Calculate</button>
+
+            <!-- Area to display result -->
+            <p class='output_num'></p>
+        </div>
+
+
+        <!-- ==================== YouTube Subscribe Button ==================== -->
+
+        <div class='section'>
+
+            <h2>YouTube Subscribe Button</h2>
+
+            <button class="js-subscribe-button" onclick="subscribe_button_change()">Subscribe</button>
+        </div>
+
+
+        <!-- ==================== Toggle ON/OFF ==================== -->
+
+        <div class='section'>
+
+            <h2>Toggle ON/OFF</h2>
+
+            <button class="toggled1 toggel_white" onclick="change_colour('.toggled1')">Gaming</button>
+
+            <button class="toggled2 toggel_white" onclick="change_colour('.toggled2')">Music</button>
+
+            <button class="toggled3 toggel_white" onclick="change_colour('.toggled3')">Tech</button>
+        </div>
+
+
+        <!-- ==================== Todo List Section ==================== -->
+
+        <div class="section">
+            <!--type="date" tells the browser what kind of input field this should be-->
+            <h2>Todo List</h2>
+                <input 
+                class="todo_list_practice-box  input_grid_display" 
+                placeholder="Todo Name" 
+                onkeyup="console.log(event) ; if (event.key === 'Enter') { todo_list(); document.querySelector('.todo_list_practice-box').value=''}">
+
+                <input type="date" class="todo_list_date  input_grid_display">     
+                <button 
+                    class="css_Amazon_calculate_button   input_grid_display" 
+                    onclick="todo_list() ; document.querySelector('.todo_list_practice-box').value=''">Add</button>  
+
+            
+            <div  class="todo_list_output grid_display"></div>      <!-- here in class we mentend two class just by sperating them with spaces -->
+            
+        </div>
+
+        <!-- ==================== JavaScript Logic ==================== -->
+
+        <script src="master_code/master.js"></script>
+
+    </body>
+
+</html>
+
