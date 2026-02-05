@@ -89,7 +89,6 @@ int main (){
 
     mygraph->display();
 
-
     mygraph->remove_edge('A','D');
     mygraph->remove_edge('C','D');
     mygraph->remove_edge('B','D');
@@ -98,3 +97,4 @@ int main (){
 
     return 0;
 }
+
