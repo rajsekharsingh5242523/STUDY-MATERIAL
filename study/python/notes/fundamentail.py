@@ -829,3 +829,62 @@ print(squared)  # [1, 4, 9, 16]
                 #lambda x: x**2 → a quick function that squares x.
                 #map() applies it to every item in nums.
 
+
+#━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+#============= ASCII Function ========== 
+#━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+user=int(input('Enter your number of rows:'))
+holder='A'
+for i in range(user):
+    for j in range (0,i+1):
+        print(holder,end=' ')
+        holder=chr(ord(holder)+1)
+    print()       
+
+
+'''
+Enter youe number of rows : 4
+ 1111
+  222
+   33
+    4
+'''
+
+user=int(input("Enter youe number of rows : "))
+char='1'
+for i in range(user):
+    print(i*" ",char*(user-i))
+    char=str(int(char)+1)
+
+
+
+
+
+def print_pattern(n):
+    # Top part
+    for i in range(n):
+        # First set of asterisks
+        print("*" * (i + 1), end="")
+
+        # Spaces (if not the last row of the top part)
+        if i != n - 1:
+            print(" " * (2 * (n - i - 1)), end="")
+
+        # Second set of asterisks
+        print("*" * (i + 1))
+
+    # Bottom part
+    for i in range(n):
+        # First set of asterisks
+        print("*" * (n - i), end="")
+
+        # Spaces
+        print(" " * (2 * i), end="")
+
+        # Second set of asterisks
+        print("*" * (n - i))
+
+# Example usage:
+n_value = 4
+print_pattern(n_value)
