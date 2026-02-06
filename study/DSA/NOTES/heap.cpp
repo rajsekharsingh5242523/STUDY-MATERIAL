@@ -5,7 +5,7 @@ using namespace std;
 
 class heap{
     private:
-        vector<int>storage={-1};
+        vector<int>storage;
 
     public:
         
@@ -23,13 +23,13 @@ class heap{
             int child_index=storage.size()-1;
             cout<<"child: "<<child_index<<endl;
             
-            int parent_index=(child_index)/2;
+            int parent_index=(child_index-1)/2;
             cout<<"parent: "<<parent_index<<endl;
 
-            while(child_index > 1 && vertex>storage[parent_index]){
+            while(child_index > 0 && vertex>storage[parent_index]){
                 swap(&storage[child_index],&storage[parent_index]);
                 child_index=parent_index;
-                parent_index=(child_index) / 2;
+                parent_index=(child_index-1)/2;
                 cout <<"changed"<<endl;
 
             };
@@ -57,9 +57,16 @@ int main(){
 
     myheap->insert(99);
     myheap->insert(72);
-    myheap->insert(58);
     myheap->insert(61);
+    myheap->insert(58);
+
+    myheap->display();
+
     myheap->insert(100);
+
+    myheap->display();
+
+    myheap->insert(75);
 
     myheap->display();
 
