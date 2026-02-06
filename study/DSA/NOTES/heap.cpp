@@ -39,8 +39,41 @@ class heap{
 
         }
 
-};      
 
+        int delect() {
+            if(storage.empty()){
+                cout << "heap is empty" << endl;
+                return -1;
+            }
+
+            int max_val = storage[0];
+            swap(&storage[0],&storage[storage.size()-1]);
+            storage.pop_back();
+
+            int parent = 0;
+
+            while(true) {
+                int left = 2*parent + 1;
+                int right = 2*parent + 2;
+                int largest = parent;
+
+                if(left < storage.size() && storage[left] > storage[largest])
+                    largest = left;
+
+                if(right < storage.size() && storage[right] > storage[largest])
+                    largest = right;
+
+                if(largest != parent) {
+                    swap(&storage[parent], &storage[largest]);
+                    parent = largest;
+                } else {
+                    break; 
+                }
+            }
+
+            return max_val;
+        }
+};     
 
 
 int main(){
@@ -48,21 +81,23 @@ int main(){
 
     heap *myheap=new heap();
 
-    myheap->insert(99);
-    myheap->insert(72);
-    myheap->insert(61);
-    myheap->insert(58);
-
-    myheap->display();
-
-    myheap->insert(100);
-
-    myheap->display();
-
+    myheap->insert(95);
     myheap->insert(75);
+    myheap->insert(80);
+    myheap->insert(55);
+    myheap->insert(60);
+    myheap->insert(50);
+    myheap->insert(65);
 
     myheap->display();
 
+    myheap->delect();
+
+    myheap->display();
+
+    myheap->delect();
+
+    myheap->display();
 
     return 0;
 }
