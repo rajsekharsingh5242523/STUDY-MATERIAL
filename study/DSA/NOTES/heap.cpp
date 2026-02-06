@@ -19,21 +19,14 @@ class heap{
         void insert(int vertex){
             storage.push_back(vertex);
 
-            cout<<"vertex: "<<vertex<<endl;
             int child_index=storage.size()-1;
-            cout<<"child: "<<child_index<<endl;
-            
+           
             int parent_index=(child_index-1)/2;
-            cout<<"parent: "<<parent_index<<endl;
-
             while(child_index > 0 && vertex>storage[parent_index]){
                 swap(&storage[child_index],&storage[parent_index]);
                 child_index=parent_index;
                 parent_index=(child_index-1)/2;
-                cout <<"changed"<<endl;
-
             };
-            cout<<"no changes"<<endl;
             return;
         }
 
