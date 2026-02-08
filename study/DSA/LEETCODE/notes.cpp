@@ -169,3 +169,15 @@ public:
         return false;
     }
 };
+
+
+
+class findmiddle(){
+    Node *slow=head;
+    Node *fast=head;
+    while (fast != nullptr && fast->next !=nullptr){  /* the loop uses || instead of &&, causing fast->next to be accessed when fast is null. */
+        slow=slow->next; // fast != nullptr → ❌ false   NOTE: The condition should be fast != nullptr && fast->next != nullptr to ensure that fast->next is not accessed when fast is null.
+        fast=fast->next->next; //fast->next != nullptr → 💥 CRASH (fast is NULL)
+    }
+    return slow->value;
+}
