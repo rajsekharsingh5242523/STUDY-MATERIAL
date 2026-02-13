@@ -1,276 +1,293 @@
-#include  <iostream>
+#include <stdio.h>
 
-using namespace std;
+void pointer (int *i, int j) {
+    *i = *i * *i ;
+    j = j * j ;
+}
 
-class Node{  
+int main() {
+    int i = 4, j = 2 ;
+    pointer(&i, j) ;
+    printf("%d %d", i, j);
+    return 0;
+}
 
-    public:
-        int value;
-        Node*next;
+#include <stdio.h>
+int main() {
+    int num[] = {24, 34, 12, 44, 56, 17};
+    int i;
+    for (i = 0 ; i <= 5 ; i++){
+        printf("%d %d", *(i + num), i[num]);
+    }
+    return 0;
+}
 
-        Node(int value){        /* “Anything inside public is accessible from outside, but only functions with the same name as the class are constructors.”A function is a constructor only if:Its name is exactly the same as the class name It has no return type It is inside the class definition*/
-            this->value = value;
-            next=nullptr;
-        }
-};
-
-
-
-class linkedList{
-    private:    //Private members /function  are accessible only inside the same class only the class ma function can acceses it.
-        Node *head;
-        Node *tail;
-        int len =0;
-
-    public:
-        linkedList(int value) {
-            Node *firstNode=new Node(value);
-            head=firstNode;
-            tail=firstNode;
-            len=1;
-        }   
-
-        ~linkedList(){
-            
-            Node *ptr=head;
-            while(ptr){
-                head=head->next;
-                delete ptr;
-                ptr = head;
-
-            }
-        };
-
-        void printList(){
-            Node *temp=head;
-            while(temp !=nullptr){
-                if (head == nullptr) {
-                    cout << "Empty list\n";
-                    return;
-                }
-
-                cout << temp->value <<endl;
-                temp=temp->next;
-            }
-            return;
-        }
-
-
-        int getLength(){
-            cout<<"length of list:";
-            return len;
-        }
-
-        void append(int value){
-            
-            Node *newNode=new Node(value);
-            if (len==0){
-                tail=newNode;
-                head=newNode;
-            }else{
-                tail->next=newNode;
-                tail=newNode;
-            }
-            len ++;
-            return;
-        };
-
-
-        void deleteLast(){
-
-            if (head == nullptr) {
-                return;
-            }
-
-            if (head == tail) {
-                //eged case
-                delete head;
-                head = nullptr;
-                tail = nullptr;
-                len = 0;
-                return;
-            }
-
-            Node *temp=head;
-
-            for(int i=0;i<len-2;i++){
-                temp=temp->next;
-            };
-
-            delete tail;
-            tail=temp;
-            tail->next=nullptr;
-            len--;
-        };
-
-        void search(int val) {
-            int index = 0;
-            Node* temp = head;
-
-            while (temp) {
-                if (temp->value == val) {
-                    cout << val << " is found in location: " << index << endl;
-                    return;
-                }
-                temp = temp->next;
-                index++;
-            }
-
-            cout << "Not found in the list" << endl;
-        }
-
-        void prepend(int val){
-            Node *newNode=new Node(val);
-
-            if (head==nullptr){
-                head=tail=newNode;
-            }else{
-                newNode->next=head;
-                head=newNode;
-            };
-            
-            len++;
-            return;
-        }
-
-
-        void delectFirst(){
-
-            if (head==nullptr) {
-                cout<<"the list is empty no elements to delect "<<endl;
-                return;
-            }else if (head==tail){
-                delete head;
-                head = nullptr;
-                tail = nullptr;
-
-            }else{
-                Node *hold=head;
-                head=head->next;
-                delete hold;
-            }
-
-            len--;
-        }
-
-
-        int getValue (int ind){
-            int index=0;
-            Node *temp=head;
-            if(ind<0 ||ind>=len){
-                cout<<"Invalid index"<<endl;
-            }else{
-                for(int i=0;i<ind;i++){
-                    temp=temp->next;
-                }
-                cout<<temp->value<<endl;
-            }
-            return 0;
-        };
-
-
-        int set (int ind,int newvalue){
-            int index=0;
-            Node *temp=head;
-            if(ind<0 ||ind>=len){
-                cout<<"Invalid index"<<endl;
-            }else{
-                for(int i=0;i<ind;i++){
-                    temp=temp->next;
-                }
-                temp->value=newvalue;
-                return 1;
-            };
-            return 0;
-        };
-
-
-        void insert(int ind ,int val){
-            
-            if (ind==0){
-                    prepend(val);
-                    return;
-                };
-                
-
-            if (ind==len){
-                append(val);
-                return;
-            };
-
-            Node *newNode=new Node(val);
-            Node *temp=head;
-
-            if(ind<0 ||ind>=len){
-                cout<<"Invalid index"<<endl;
-            }else{
-                
-                for(int i=0;i<ind-1;i++){
-                    temp=temp->next;
-                };
-                newNode->next=temp->next;
-                temp->next=newNode;
-            };
-            len++;
-            return;
-        }
-
-
-        void delectAny(int ind){
-            if(ind<0 || ind>len) return;
-            if(ind==0) return delectFirst(); // because delectAny and delectFirst have same return type
-            if(ind==len-1) return deleteLast();
-
-            Node *hold=head;
-            for(int i =0 ;i<ind-1;i++){
-                hold=hold->next;
-            };
-            Node *del=hold->next;
-            hold->next=del->next;
-            delete del;
-            len--;
-        };
-
-
-
-        void reverse(){
-
-            Node *temp=head;
-            head=tail;
-            tail=temp;
-            Node *before =nullptr;
-            for(int i=0;i<len;i++){
-                Node *after=temp->next;
-                temp->next=before;
-                before=temp;
-                temp=after;
-            }
-
-            return;
-        }
-
-
-
-
-        
+#include <stdio.h>
     
-};
+int main() {
+    static int a[] = {0, 1, 2, 3, 4};
+    int *p[] = {a, a + 1, a + 2, a + 3, a + 4};
+    printf("%d", *(*p));
+    return 0;
+}
+
+#include<stdio.h>
+ 
+int main() {
+    char *a = {'p', 'r', 'o', 'g'};
+    printf("%s", a);
+    return 0;
+} 
+
+#include<stdio.h>
+int b = 5;
+
+int* a() {
+    return &b;
+}
+
+int main() { 
+    *a() = 10;
+    printf("%d", b);
+    return 0;
+}
 
 
+#include <stdio.h>
+
+int main() {
+    int days;
+    int *pdays = &days;
+    int size1 = sizeof(days); 
+    int size2 = sizeof(days + 1); 
+    int size3 = sizeof(pdays);
+    printf("%p %d %d %d", (void *)&pdays, size1, size2, size3);
+    return 0;
+}
+
+#include <stdio.h>
+
+int main() {
+    double val = 9.7;
+    double array[] = { 3.2, 4.3, 5.4 };
+    double *pa[] = { &val, array + 1, NULL };
+    printf("%.1lf", *pa[1]);
+    return 0;
+}
+
+#include <stdio.h>
+    
+int main() {
+    int a[10];
+    *a = 7;
+    *(a+1) = 12;
+    int p = *(a+1) / *a;
+    printf("%d", p);
+    return 0;
+}
+
+
+#include<stdio.h>
+int main(){
+    printf("%c",*"abcde");
+    return 0;
+}
+
+
+#include <stdio.h>
+    
+int main() {
+    int arr[5] = {1, 2, 3, 4, 5};
+    int *ptr = arr;
+    printf("%d", *(ptr++));
+    return 0;
+}
+
+#include <stdio.h>
+void modifyValue(const int *ptr) { 
+    int newVal = 10;
+    ptr = &newVal;
+}
+int main() {
+    int num = 5;
+    modifyValue(&num);
+    printf("%d", num);
+    return 0;
+}
+
+
+#include <stdio.h>
+    
+int main() {
+    int arr[5] = {10, 20, 30, 40, 50};
+    int *ptr = &arr[3];
+    printf("%d", *(ptr - 2));
+    return 0;
+}
+
+#include <stdio.h>
+    
+int main() {
+    int x = 10;
+    int *ptr1 = &x;
+    int *ptr2 = ptr1;
+    (*ptr2)++;
+    printf("%d %d", *ptr1, *ptr2);
+    return 0;
+}
+
+
+#include <stdio.h>
+    
+int main() {
+    int a[] = {1,2,3,4,5};
+    int *p;
+    p = a;
+    ++*p;
+    printf("%d ", *p);
+    p += 2;
+    printf("%d ", *p);
+    return 0;
+}
+
+#include <stdio.h>
+int main() {
+    int arr[] = {10, 20, 30, 40, 50};
+    int *ptr = arr + 4;
+    printf("%d", ptr[-1]);
+    return 0;
+}
+
+#include <stdio.h>
+
+void change(int *ptr) {
+    ptr = NULL;
+}
+
+int main() {
+    int a = 7;
+    int *ptr = &a;
+    change(ptr);
+    if (ptr == NULL)
+        printf("NULL ");
+    else
+        printf("Not NULL ");
+    return 0;
+}
+
+#include <stdio.h>
+
+void swap(int *ptr1, int *ptr2) {
+    int temp = *ptr1;
+    *ptr1 = *ptr2;
+    *ptr2 = temp;
+}
+
+int main() {
+    int x = 5, y = 10;
+    int *px = &x, *py = &y;
+    swap(px, py);
+    printf("%d %d", x, y);
+    return 0;
+}
+
+#include <stdio.h>
+void update(int *a, int *b) {
+    int temp = *a;
+    *a = *a + *b;
+    *b = temp - *b;
+}
+int main() {
+    int x = 7, y = 3;
+    update(&x, &y);
+    printf("x: %d, y: %d\n", x, y);
+    return 0;
+}
+
+#include <stdio.h>
+
+void modify(int *x) {
+    *x = x + 10;
+}
+
+int main() {
+    int num = 5;
+    modify(&num);
+    printf("%d", num);
+    return 0;
+}
+
+#include <stdio.h>
+void modifyRefValue(int *ptr) {
+    int newVal = 50;
+    ptr = &newVal;
+}
+int main() {
+    int value = 30;
+    int *ptr = &value;
+    modifyRefValue(ptr);
+    printf("%d\n", *ptr);
+    return 0;
+}
+
+#include <stdio.h>
 
 int main(){
-
-    linkedList *mylist=new linkedList(1);
-    mylist->append(2);
-    mylist->append(3);
-    mylist->append(4);
-    mylist->append(5);
-    mylist->printList();
-
-    cout <<mylist->findmiddle();
-
+    int m,n;
+    int *a,*b;
+    scanf("%d %d",&m,&n);
+    a=&m;
+    b=&n;
+    printf("%d %d",*a,*b);
 
     return 0;
 }
 
 
+
+void findMaxMinDigits(int n, int *ptr_max, int *ptr_min){
+    int max=0;
+    int min=9;
+    
+    int sum=0;
+    while(n>0){
+        sum=n%10;
+        if(sum<min){
+            min=sum;
+        }
+        if(sum>max){
+            max=sum;
+        }
+        n /=10;
+    };
+    *ptr_max=max;
+    *ptr_min=min;
+
+    return;
+}
+
+void calculateSum(int *ptr_max, int *ptr_min, int *ptr_sum){
+    int cal=(*ptr_max)+(*ptr_min);
+    *ptr_sum=cal;
+    return ;
+}
+
+
+#include <stdio.h>
+
+int main(){
+    
+    int pop1,pop2,pop3;
+    char name[50];
+    scanf("%s %d",name,&pop1);
+    scanf("%s %d",name,&pop2);
+    scanf("%s %d",name,&pop3);
+    
+    int sum=(pop1+pop2+pop3);
+    printf("%d",sum);
+    float avg=sum/3;
+    printf("%.2f",avg);
+    
+    
+    return 0;
+}
