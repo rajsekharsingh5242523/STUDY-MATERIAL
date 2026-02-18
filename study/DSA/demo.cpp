@@ -25,15 +25,15 @@ class AVLTree {
     public:
 
         int getheight(Node *temp){
-            if(temp==nullptr) return 0;//
-            return temp->height;//
+            if(temp==nullptr) return 0;//////////////////
+            return temp->height;////////////////////////
 
         }
 
 
         int balanceCal(Node *temp){
-            if(temp == nullptr) return 0; //
-            return getheight(temp->left) - getheight(temp->right); //
+            if(temp == nullptr) return 0; ///////////////
+            return getheight(temp->left) - getheight(temp->right); 
         }
 
 
@@ -43,6 +43,7 @@ class AVLTree {
 
             y->left=x;
             x->right=t;
+            // Update heights/////////////////////
 
             x->height = 1 + max(getheight(x->left), getheight(x->right));
             y->height = 1 + max(getheight(y->left), getheight(y->right));
@@ -58,7 +59,7 @@ class AVLTree {
             x->right=y;
             y->left=t;
 
-            // Update heights
+            // Update heights/////////////////////
             y->height = 1 + max(getheight(y->left), getheight(y->right));
             x->height = 1 + max(getheight(x->left), getheight(x->right));
 
@@ -75,14 +76,14 @@ class AVLTree {
             }
             
             if(key < currtemp->value){
-                currtemp->left = insert(currtemp->left,key);//
+                currtemp->left = insert(currtemp->left,key);///////
             }else if(key > currtemp->value){
                 currtemp->right = insert(currtemp->right,key);
             }else{
-                return currtemp;//
+                return currtemp;////////
             }
 
-            currtemp->height = 1 + max(getheight(currtemp->left),getheight(currtemp->right));//
+            currtemp->height = 1 + max(getheight(currtemp->left),getheight(currtemp->right));//////////////
 
 
             int balancingfactor = balanceCal(currtemp);
@@ -93,20 +94,20 @@ class AVLTree {
             }
             //left
             if(balancingfactor > 1 && key < currtemp->left->value){
-                return rotateright(currtemp); //
+                return rotateright(currtemp); /////////////
             }
             //right-left
-            if(balancingfactor < -1 && key < currtemp->right->value){
+            if(balancingfactor < -1 && key </*>*/ currtemp->right->value){
                 currtemp->right = rotateright(currtemp->right);
                 return rotateleft(currtemp);
             }
-            //left-right
-            if(balancingfactor >1 && key > currtemp->left->value){
-                currtemp->left = rotateleft(currtemp->left); //
+            //left-righ
+            if(balancingfactor >1 && key >/*<*/ currtemp->left->value){
+                currtemp->left = rotateleft(currtemp->left); ////////////////
                 return rotateright(currtemp);
             }
         
-            return currtemp;
+            return currtemp;//////
         }
 
 
