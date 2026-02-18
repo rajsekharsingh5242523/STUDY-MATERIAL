@@ -105,12 +105,18 @@ public:
         return node;
     }
 
-    void inorder(Node* root) {
-        if (root != nullptr) {
-            inorder(root->left);
-            cout << root->key << " ";
-            inorder(root->right);
-        }
+    void inorder(Node* temp){
+            if(temp->left!=nullptr){
+                inorder(temp->left);
+            }
+
+            cout <<temp->key<<" ";
+
+            if(temp->right!=nullptr){
+                inorder(temp->right);
+            }
+
+            return ;      
     }
 };
 
