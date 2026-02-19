@@ -68,11 +68,9 @@ class AVLTree {
 
 
         Node* insert(Node *currtemp,int key){
-
-            Node *newnode =new Node(key);
             
             if(currtemp==nullptr){
-                return newnode;
+                return  new Node(key);
             }
             
             if(key < currtemp->value){

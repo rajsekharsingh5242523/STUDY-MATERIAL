@@ -25,15 +25,14 @@ class BinarySearchTree{
         Node *root=nullptr;
         
         void insert(int user){
-            Node *newnode=new Node(user);
             if(root == nullptr){
-                root=newnode;
+                root=new Node(user);
             }
             Node *temp=root;
             while (true){
 
                 if(temp->value==user) return;
-
+                Node *newnode=new Node(user);
                 if(user<(temp->value)){
                     if(temp->left==nullptr){
                         temp->left=newnode;
@@ -139,6 +138,61 @@ class BinarySearchTree{
 
         }
 
+        int  Successor(Node *main){
+            while(main->left!=nullptr){
+                main=main->left;
+            }
+            return main->value;
+            
+        };
+
+        int  Predecessor(Node *main){
+
+            while(main->right!=nullptr){
+                main=main->right;
+            }
+            return main->value;
+        };
+        
+
+        Node* RemoveNode(Node *currtemp,int key){
+
+            if(currtemp==nullptr){//think of null root case
+                return nullptr;
+            }
+            //think of key not in the tree
+            if(key<currtemp->value){
+                currtemp->left = RemoveNode(currtemp->left,key);
+            }else if(key > currtemp->value){
+                currtemp->right = RemoveNode(currtemp->right,key);
+            }else{
+                if(currtemp->left == nullptr && currtemp->right == nullptr){
+                    delete currtemp;
+                    return nullptr;
+                }else if(currtemp->left == nullptr && currtemp->right != nullptr){
+                    Node *temp=currtemp->right;
+                    delete currtemp;
+                    return temp;
+                }else if(currtemp->right ==nullptr && currtemp->left != nullptr){
+                    Node *temp=currtemp->left;
+                    delete currtemp;
+                    return temp;
+                }else{
+                    int minValue = Successor(currtemp->right);
+                    currtemp->value = minValue;
+                    currtemp->right = RemoveNode(currtemp->right,minValue);
+                }
+            }
+
+            return currtemp;
+
+        }
+
+
+        void RemoveNode(int delvalue){
+            root = RemoveNode(root,delvalue);
+        };
+
 };
 
 
@@ -147,13 +201,17 @@ int main(){
 
     BinarySearchTree* myBST = new BinarySearchTree();
 
-    myBST->insert(47);
-    myBST->insert(21);
-    myBST->insert(76);
-    myBST->insert(18);
-    myBST->insert(27);
-    myBST->insert(52);
-    myBST->insert(82);
+    myBST->insert(40);
+    myBST->insert(50);
+    myBST->insert(45);
+    myBST->insert(55);
+
+    cout << "Breadth First Search:\n";
+    myBST->BFS();
+    cout <<endl;
+
+    myBST->RemoveNode(50);
+    
 
 
     cout << "Breadth First Search:\n";
