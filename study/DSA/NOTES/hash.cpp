@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 using namespace std;
 
 class Node{
@@ -95,9 +96,12 @@ int main(){
 
     HashTable*myhashtable=new HashTable();
 
-    myhashtable->set("nails",4);
+    myhashtable->set("eat",4);
 
-    myhashtable->set("tile",5);
+    myhashtable->set("tea",5);
+
+    myhashtable->printTable();
+
 
     myhashtable->set("lumber",6);
 
