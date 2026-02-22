@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Music Player UI</title>
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <div class="navbar">
+      <i class="fa-solid fa-headphones"></i>
+      <h3>Music Player</h3>
+    </div>
+    <div class="songs">
+      <div class="card" data-song="audio/BlindingLights.mp3">
+        <img src="pics/BlindingLights.jpeg" alt="albumpic" />
+        <h3>Blinding Lights</h3>
+        <h5>The Weeknd</h5>
+        <div class="controls">
+          <i class="fa-solid fa-play"></i>
+        </div>
+      </div>
+      <div class="card" data-song="audio/Levitating.mp3">
+        <img src="pics/Levitating.jpeg" alt="albumpic" />
+        <h3>Levitating</h3>
+        <h5>Dua Lipa</h5>
+        <div class="controls">
+          <i class="fa-solid fa-play"></i>
+        </div>
+      </div>
+      <div class="card" data-song="audio/UptownFunk.mp3">
+        <img src="pics/UptownFunk.jpeg" alt="albumpic" />
+        <h3>Uptown Funk</h3>
+        <h5>Mark Ronson ft. Bruno Mars</h5>
+        <div class="controls">
+          <i class="fa-solid fa-play"></i>
+        </div>
+      </div>
+      <div class="card" data-song="audio/ShapeOfYou.mp3">
+        <img src="pics/ShapeOfYou.jpeg" alt="albumpic" />
+        <h3>Shape Of You</h3>
+        <h5>Ed Sheeran</h5>
+        <div class="controls">
+          <i class="fa-solid fa-play"></i>
+        </div>
+      </div>
+      <div class="card" data-song="audio/SmoothOperator.mp3">
+        <img src="pics/SmoothOperator.jpeg" alt="albumpic" />
+        <h3>Smooth Operator</h3>
+        <h5>Sade</h5>
+        <div class="controls">
+          <i class="fa-solid fa-play"></i>
+        </div>
+      </div>
+    </div>
+    <footer class="audio-footer">
+      <audio id="audioPlayer" controls>
+        <source src="BlindingLights" type="audio/mpeg">
+        Your browser does not support the audio element.
+      </audio>
+    </footer>
+
+  </body>
+</html>

@@ -1,0 +1,83 @@
+*{
+  font-family: system-ui, sans-serif;
+  box-sizing: border-box;
+}
+
+body{
+  margin:0;
+  background:#0B0F19;
+  color:#fff;
+}
+
+.navbar{
+  height:60px;
+  background:#0A0F1C;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:28px;
+  border-bottom:2px solid #3B82F6;
+}
+
+.navbar i{ 
+  margin-left:20px; 
+}
+
+.songs{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:25px;
+  margin:50px 0 120px;
+}
+
+.card{
+  background:#121826;
+  border:1px solid #1F2937;
+  width:215px;
+  height:350px;
+  padding:12px;
+  border-radius:12px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  transition:.3s;
+}
+
+.card:hover{
+  transform:translateY(-6px);
+  border-color:#3B82F6;
+  box-shadow:0 0 15px #3B82F6;
+}
+
+.card img{
+  width:100%;
+  height:200px;
+  object-fit:cover;
+  border-radius:10px;
+}
+
+.card h5{ 
+  color:#9CA3AF; margin:0; 
+}
+
+.controls{
+  margin-top: 10px;
+}
+.audio-footer{
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 90px;
+  background: #0A0F1C;
+  border-top: 2px solid #3B82F6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#audioPlayer{
+  width: 90%;
+  filter: invert(1) brightness(1.2);
+}
