@@ -1,190 +1,268 @@
 #include <iostream>
-
+#include <queue>
+#include <cmath>
 using namespace std;
 
-class Node {
-    public:
-        int value; 
-        Node* left;
-        Node* right;
-        int height;
 
-        Node(int val) {
-            value = val;
-            left = nullptr;
-            right = nullptr;
-            height = 1;
-        }
+class node{
+    public:
+
+    int value;
+    int height=1;
+    node* left=nullptr;
+    node* right=nullptr;
+
+    node(int value){
+        this->value=value;
+    };
 };
 
 
-class AVLTree {
-    
+class avltree {
+
     public:
 
-        int getheight(Node *temp){
-            if(temp==nullptr) return 0;//////////////////
-            return temp->height;////////////////////////
-        }
+    node* root=nullptr;
+
+    int getheight(node* n){
+        if(n == nullptr) return 0;  // ✅ safe null check
+        return n->height;
+    };
+
+    node* rotateright(node* y){
+        node* x = y->left;
+        node* t = x->right;
+
+        x->right=y;
+        y->left=t;
+
+        // Update heights/////////////////////
+        y->height=1 +max(getheight(y->left),getheight(y->right)); 
+        x->height=1 +max( getheight(x->left),getheight(x->right));   
+
+        return x;
+    }
 
 
-        int balanceCal(Node *temp){
-            if(temp == nullptr) return 0; ///////////////
-            return getheight(temp->left) - getheight(temp->right); 
-        }
-
-
-        Node * rotateleft(Node *x){
-            Node *y= x->right;
-            Node *t= y->left;
-
-            y->left=x;
-            x->right=t;
-            // Update heights/////////////////////
-
-            x->height = 1 + max(getheight(x->left), getheight(x->right));
-            y->height = 1 + max(getheight(y->left), getheight(y->right));
-
-            return y;
-        }
-
-
-        Node * rotateright(Node *y){
-            Node *x=y->left;
-            Node *t=x->right;
-
-            x->right=y;
-            y->left=t;
-
-            // Update heights/////////////////////
-            y->height = 1 + max(getheight(y->left), getheight(y->right));
-            x->height = 1 + max(getheight(x->left), getheight(x->right));
-
-            return x;
-        }
-
-
-        Node* insert(Node *currtemp,int key){
-            
-            if(currtemp==nullptr){
-                return new Node(key);
-            }
-            
-            if(key < currtemp->value){
-                currtemp->left = insert(currtemp->left,key);///////
-            }else if(key > currtemp->value){
-                currtemp->right = insert(currtemp->right,key);
-            }else{
-                return currtemp;////////
-            }
-
-            currtemp->height = 1 + max(getheight(currtemp->left),getheight(currtemp->right));//////////////
-            int balancingfactor = balanceCal(currtemp);
-            
-            //right
-            if(balancingfactor < -1 &&  key > currtemp->right->value/**/){
-                return rotateleft(currtemp);
-            }
-            //left
-            if(balancingfactor > 1 && key < currtemp->left->value){
-                return rotateright(currtemp); /////////////
-            }
-            //right-left
-            if(balancingfactor < -1 && key </*>*/ currtemp->right->value){
-                currtemp->right = rotateright(currtemp->right);
-                return rotateleft(currtemp);
-            }
-            //left-righ
-            if(balancingfactor >1 && key >/*<*/ currtemp->left->value){
-                currtemp->left = rotateleft(currtemp->left); ////////////////
-                return rotateright(currtemp);
-            }
+    node* rotateleft(node* x){
+        node* y = x->right;
+        node* t = y->left;
         
-            return currtemp;//////
+        y->left = x;   //////////////////
+        x->right = t;  //////////////////
+        
+        // Update heights/////////////////////
+        x->height=1 +max(getheight(x->left),getheight(x->right)); 
+        y->height=1 +max( getheight(y->left),getheight(y->right));   
+
+        return y;
+    }
+
+    int balance(node* temp){
+        if(temp == nullptr) return 0; ///////////////
+        return (getheight(temp->left) - getheight(temp->right)); 
+    };
+
+    node* minnode(node* temp){
+        while(temp->left != nullptr){
+            temp = temp->left;
+        };
+        return temp;
+    };
+
+
+    node* deletenode(node* currentnode,int key){
+
+        if(currentnode == nullptr){
+            return nullptr; // node not found, nothing to delete
         }
 
+        // use to drive the direction
+        if(key < currentnode->value){
+                currentnode->left = deletenode(currentnode->left, key);
+        }else if(key > currentnode->value){
+                currentnode->right = deletenode(currentnode->right, key);
+        }else{
+            // node found
 
-        // find the smallest node in a subtree (used during delete)
-        Node* minNode(Node* temp){
-            while(temp->left != nullptr){
-                temp = temp->left;
+            // Case 1: no child
+            if(currentnode->left == nullptr && currentnode->right == nullptr){
+                delete currentnode;
+                return nullptr;
             }
-            return temp;
+            // Case 2: one child
+            else if(currentnode->left == nullptr){
+                node* temp = currentnode->right;
+                delete currentnode;
+                return temp;
+            }else if(currentnode->right == nullptr){
+                node* temp = currentnode->left;
+                delete currentnode;
+                return temp;
+            }
+            // Case 3: two children - get inorder successor (smallest in right subtree)
+            else{
+                node* temp = minnode(currentnode->right);
+                currentnode->value = temp->value;
+                currentnode->right = deletenode(currentnode->right, temp->value);
+            }
         }
 
+        // Update heights/////////////////////
+        currentnode->height = 1 + max(getheight(currentnode->left),getheight(currentnode->right));
+        int balacingfactor = balance(currentnode);
+        
+        //left
+        if(balacingfactor >1 && balance(currentnode->left) >= 0){
+            return rotateright(currentnode); /////////////
+        }
+        //left-right
+        if(balacingfactor >1 && balance(currentnode->left) < 0){
+            currentnode->left = rotateleft(currentnode->left); ////////////////
+            return rotateright(currentnode);
+        }
+        //right
+        if(balacingfactor < -1 && balance(currentnode->right) <=0){
+            return rotateleft(currentnode);
+        }
+        //right-left
+        if(balacingfactor < -1 && balance(currentnode->right) > 0){
+            currentnode->right = rotateright(currentnode->right);
+            return rotateleft(currentnode);
+        }
 
-        Node* deleteNode(Node* currtemp, int key){
+        return currentnode;
 
-            if(currtemp == nullptr) return nullptr; // node not found, nothing to delete
+    };
 
-            if(key < currtemp->value){
-                currtemp->left = deleteNode(currtemp->left, key);
-            }else if(key > currtemp->value){
-                currtemp->right = deleteNode(currtemp->right, key);
-            }else{
-                // node found
-                if(currtemp->left == nullptr || currtemp->right == nullptr){
-                    // one child or no child
-                    Node* temp = currtemp->left ? currtemp->left : currtemp->right;
-                    if(temp == nullptr){
-                        // no child case
-                        temp = currtemp;
-                        currtemp = nullptr;
-                    }else{
-                        // one child case - copy child into current
-                        *currtemp = *temp;
-                    }
-                    delete temp;
-                }else{
-                    // two children - get inorder successor (smallest in right subtree)
-                    Node* temp = minNode(currtemp->right);
-                    currtemp->value = temp->value;
-                    currtemp->right = deleteNode(currtemp->right, temp->value);
+    void deletenode(int num) {
+        root = deletenode(root,num);
+    };
+
+
+    node* insert(node* currentnode,int key){
+
+        if(currentnode == nullptr){
+            return new node(key);
+        }
+        
+        if(key < currentnode->value){
+            currentnode->left = insert(currentnode->left,key);///////
+        }else if(key > currentnode->value){
+            currentnode ->right = insert(currentnode->right,key);
+        }else{
+            return currentnode;////////
+        }
+
+        currentnode->height = 1 + max(getheight(currentnode->left),getheight(currentnode->right));//////////////
+        int balancingfactor=balance(currentnode);
+
+        //left
+        if(balancingfactor > 1 && key < currentnode->left->value){
+            return rotateright(currentnode); /////////////
+        }
+        //right
+        if(balancingfactor < -1 && key > currentnode->right->value/**/ ){
+            return rotateleft(currentnode);
+        }
+        //right-left
+        if(balancingfactor < -1 && key </*>*/ currentnode->right->value ){
+            currentnode->right = rotateright(currentnode->right);
+            return rotateleft(currentnode);
+        }
+        //left-right
+        if(balancingfactor > 1 && key >/*<*/ currentnode->left->value){
+            currentnode->left = rotateleft(currentnode->left); ////////////////
+            return rotateright(currentnode);
+        }
+
+        return currentnode;//////
+
+    }
+
+    void insert(int num) {
+        root = insert(root,num);
+    };
+
+    void inorder(node* temp){
+        if(temp->left!=nullptr){
+            inorder(temp->left);
+        }
+
+        cout <<temp->value<<" ";
+
+        if(temp->right!=nullptr){
+            inorder(temp->right);
+        }
+
+        return ;
+    };
+
+
+    // find the smallest node in a subtree (used during delete)
+    int height(node* root) {
+        if (!root) return 0;//////////////////
+        return 1 + max(height(root->left), height(root->right));
+    }
+
+    void printLevel(vector<node*> nodes, int level, int maxLevel) {
+        if (nodes.empty()) return;
+
+        int floor = maxLevel - level;
+        int edgeLines = pow(2, max(floor - 1, 0));
+        int firstSpaces = pow(2, floor) - 1;
+        int betweenSpaces = pow(2, floor + 1) - 1;
+
+        // Print node values
+        for (int i = 0; i < firstSpaces; i++) cout << " ";
+
+        vector<node*> newNodes;
+        for (node* n : nodes) {
+            if (n) {
+                cout << n->value;
+                newNodes.push_back(n->left);
+                newNodes.push_back(n->right);
+            } else {
+                cout << " ";
+                newNodes.push_back(nullptr);
+                newNodes.push_back(nullptr);
+            }
+
+            for (int i = 0; i < betweenSpaces; i++) cout << " ";
+        }
+        cout << "\n";
+
+        // Print edges (/ and \)
+        for (int i = 1; i <= edgeLines; i++) {
+            for (int j = 0; j < nodes.size(); j++) {
+                for (int k = 0; k < firstSpaces - i; k++) cout << " ";
+
+                if (nodes[j] == nullptr) {
+                    for (int k = 0; k < edgeLines * 2 + i + 1; k++) cout << " ";
+                    continue;
                 }
-            }
 
-            if(currtemp == nullptr) return nullptr; // tree had only one node
+                if (nodes[j]->left) cout << "/";
+                else cout << " ";
 
-            // Update heights/////////////////////
-            currtemp->height = 1 + max(getheight(currtemp->left), getheight(currtemp->right));
-            int balancingfactor = balanceCal(currtemp);
+                for (int k = 0; k < i * 2 - 1; k++) cout << " ";
 
-            //left
-            if(balancingfactor > 1 && balanceCal(currtemp->left) >= 0){
-                return rotateright(currtemp); /////////////
-            }
-            //left-right
-            if(balancingfactor > 1 && balanceCal(currtemp->left) < 0){
-                currtemp->left = rotateleft(currtemp->left); ////////////////
-                return rotateright(currtemp);
-            }
-            //right
-            if(balancingfactor < -1 && balanceCal(currtemp->right) <= 0){
-                return rotateleft(currtemp);
-            }
-            //right-left
-            if(balancingfactor < -1 && balanceCal(currtemp->right) > 0){
-                currtemp->right = rotateright(currtemp->right);
-                return rotateleft(currtemp);
-            }
+                if (nodes[j]->right) cout << "\\";
+                else cout << " ";
 
-            return currtemp;//////
+                for (int k = 0; k < edgeLines * 2 - i; k++) cout << " ";
+            }
+            cout << "\n";
         }
 
+        printLevel(newNodes, level + 1, maxLevel);
+    }
 
-        void inorder(Node* temp){
-            if(temp->left!=nullptr){
-                inorder(temp->left);
-            }
-
-            cout <<temp->value<<" ";
-
-            if(temp->right!=nullptr){
-                inorder(temp->right);
-            }
-
-            return ;
-        }
+    void printPrettyTree(node* root) {
+        int h = height(root);
+        vector<node*> nodes = {root};
+        printLevel(nodes, 1, h);
+    }
 
 };
 
@@ -195,16 +273,16 @@ void printMenu(){
     cout << " 1. Insert\n";
     cout << " 2. Delete\n";
     cout << " 3. Inorder Traversal\n";
-    cout << " 4. Exit\n";
+    cout << " 4. Print Tree\n";
+    cout << " 5. Exit\n";
     cout << "===============================\n";
     cout << "Enter your choice: ";
 }
 
 
-int main() {
+int main(){
 
-    AVLTree tree;
-    Node* root = nullptr;
+    avltree tree;
     int choice, value;
 
     do {
@@ -216,36 +294,49 @@ int main() {
             case 1:
                 cout << "Enter value to insert: ";
                 cin >> value;
-                root = tree.insert(root, value);
+                tree.insert(value);
                 cout << value << " inserted.\n";
                 break;
 
             case 2:
-                cout << "Enter value to delete: ";
-                cin >> value;
-                root = tree.deleteNode(root, value);
-                cout << value << " deleted (if it existed).\n";
+                if(tree.root == nullptr){
+                    cout << "Tree is empty.\n";
+                }else{
+                    cout << "Enter value to delete: ";
+                    cin >> value;
+                    tree.deletenode(value);
+                    cout << value << " deleted (if it existed).\n";
+                }
                 break;
 
             case 3:
-                if(root == nullptr){
+                if(tree.root == nullptr){
                     cout << "Tree is empty.\n";
                 }else{
                     cout << "Inorder: ";
-                    tree.inorder(root);
+                    tree.inorder(tree.root);
                     cout << endl;
                 }
                 break;
 
             case 4:
+                if(tree.root == nullptr){
+                    cout << "Tree is empty.\n";
+                }else{
+                    cout << "\n";
+                    tree.printPrettyTree(tree.root);
+                }
+                break;
+
+            case 5:
                 cout << "Exiting...\n";
                 break;
 
             default:
-                cout << "Invalid choice! Please enter 1-4.\n";
+                cout << "Invalid choice! Please enter 1-5.\n";
         }
 
-    } while(choice != 4);
+    } while(choice != 5);
 
     return 0;
-}
+};
