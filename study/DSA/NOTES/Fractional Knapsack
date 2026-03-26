@@ -1,0 +1,48 @@
+function compare(a, b) {
+    let a1 = (1.0 * a[0]) / a[1];
+    let b1 = (1.0 * b[0]) / b[1];
+    return b1 - a1;
+}
+
+function fractionalKnapsack(val, wt, capacity) {
+    let n = val.length;
+
+    // Create array to store value and weight
+    // items[i][0] = value, items[i][1] = weight
+    let items = [];
+    for (let i = 0; i < n; i++) {
+        items.push([val[i], wt[i]]);
+    }
+
+    // Sort items based on value-to-weight ratio in descending order
+    items.sort(compare);
+
+    let res = 0.0;
+    let currentCapacity = capacity;
+
+    // Process items in sorted order
+    for (let i = 0; i < n; i++) {
+
+        // If we can take the entire item
+        if (items[i][1] <= currentCapacity) {
+            res += items[i][0];
+            currentCapacity -= items[i][1];
+        }
+
+        // Otherwise take a fraction of the item
+        else {
+            res += (1.0 * items[i][0] / items[i][1]) * currentCapacity;
+
+            // Knapsack is full
+            break;
+        }
+    }
+
+    return res;
+}
+// Driver Code
+let val = [60, 100, 120];
+let wt = [10, 20, 30];
+let capacity = 50;
+
+fractionalKnapsack(val, wt, capacity);

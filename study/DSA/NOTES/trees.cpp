@@ -157,10 +157,9 @@ class BinarySearchTree{
 
         Node* RemoveNode(Node *currtemp,int key){
 
-            if(currtemp==nullptr){//think of null root case
+            if(currtemp==nullptr){
                 return nullptr;
             }
-            //think of key not in the tree
             if(key<currtemp->value){
                 currtemp->left = RemoveNode(currtemp->left,key);
             }else if(key > currtemp->value){
@@ -196,38 +195,107 @@ class BinarySearchTree{
 };
 
 
+// ─── Helper to print the menu ───────────────────────────────────────────────
+void printMenu(){
+    cout << "\n====== Binary Search Tree Menu ======\n";
+    cout << " 1. Insert\n";
+    cout << " 2. Search\n";
+    cout << " 3. Remove\n";
+    cout << " 4. BFS (Level Order)\n";
+    cout << " 5. DFS Pre-Order\n";
+    cout << " 6. DFS Post-Order\n";
+    cout << " 7. DFS In-Order\n";
+    cout << " 8. Exit\n";
+    cout << "=====================================\n";
+    cout << "Enter your choice: ";
+}
+
 
 int main(){
 
     BinarySearchTree* myBST = new BinarySearchTree();
+    int choice, value;
 
-    myBST->insert(40);
-    myBST->insert(50);
-    myBST->insert(45);
-    myBST->insert(55);
+    do {
+        printMenu();
+        cin >> choice;
 
-    cout << "Breadth First Search:\n";
-    myBST->BFS();
-    cout <<endl;
+        switch(choice){
 
-    myBST->RemoveNode(50);
-    
+            case 1:
+                cout << "Enter value to insert: ";
+                cin >> value;
+                myBST->insert(value);
+                cout << value << " inserted.\n";
+                break;
 
+            case 2:
+                cout << "Enter value to search: ";
+                cin >> value;
+                if(myBST->search(value) != nullptr){
+                    cout << value << " found in the tree.\n";
+                } else {
+                    cout << value << " not found in the tree.\n";
+                }
+                break;
 
-    cout << "Breadth First Search:\n";
-    myBST->BFS();
-    cout <<endl;
+            case 3:
+                cout << "Enter value to remove: ";
+                cin >> value;
+                myBST->RemoveNode(value);
+                cout << value << " removed (if it existed).\n";
+                break;
 
-    cout << "DFS PreOrder:\n";
-    myBST->DFSPreOrder(myBST->root);
-    cout <<endl;
+            case 4:
+                if(myBST->root == nullptr){
+                    cout << "Tree is empty.\n";
+                } else {
+                    cout << "BFS (Level Order): ";
+                    myBST->BFS();
+                    cout << endl;
+                }
+                break;
 
-    cout << "DFS PostOrder:\n";
-    myBST->DFSPostOrder(myBST->root);
-    cout <<endl;
+            case 5:
+                if(myBST->root == nullptr){
+                    cout << "Tree is empty.\n";
+                } else {
+                    cout << "DFS Pre-Order: ";
+                    myBST->DFSPreOrder(myBST->root);
+                    cout << endl;
+                }
+                break;
 
-    cout << "DFS InOrder:\n";
-    myBST->DFSInOrder(myBST->root);
+            case 6:
+                if(myBST->root == nullptr){
+                    cout << "Tree is empty.\n";
+                } else {
+                    cout << "DFS Post-Order: ";
+                    myBST->DFSPostOrder(myBST->root);
+                    cout << endl;
+                }
+                break;
 
+            case 7:
+                if(myBST->root == nullptr){
+                    cout << "Tree is empty.\n";
+                } else {
+                    cout << "DFS In-Order: ";
+                    myBST->DFSInOrder(myBST->root);
+                    cout << endl;
+                }
+                break;
+
+            case 8:
+                cout << "Exiting...\n";
+                break;
+
+            default:
+                cout << "Invalid choice! Please enter 1-8.\n";
+        }
+
+    } while(choice != 8);
+
+    delete myBST;
     return 0;
 }
