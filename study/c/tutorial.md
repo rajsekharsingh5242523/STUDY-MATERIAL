@@ -842,3 +842,154 @@ int main(){
     
     return 0;
 }
+
+
+
+
+#include <iostream>
+using namespace std;
+
+class Box {
+    public: // Initialize static member of class Box
+        static int objectCount; // Constructor definition //NOTE : Here even if we create mutiple object that all have share same  data as we increment from time to time 
+        void data(double l , double b, double h) {
+        length = l; breadth = b; height = h; // Increase every time object is created
+        objectCount++;
+        }
+    private:
+        double length, breadth, height;
+}; 
+
+// Initialize static member of class Box
+
+int Box::objectCount = 0; // we have initailze outside only we can not set default  value i nsidde .becase we are creeating new object then ever time we are or setting it's value to 0
+int main() {
+    Box Box1;
+    Box1.data(3.3, 1.2, 1.5); // Declare box1
+    Box Box2;
+    Box2.data(8.5, 6.0, 2.0); // Declare box2 // Print total number of objects.
+    cout << "Total objects: " << Box::objectCount << endl;
+    cout << Box1.objectCount<<endl;
+    return 0;
+}
+
+
+
+
+#include <iostream>
+using namespace std;
+
+class Box { 
+    private: 
+        static int length; 
+        static int breadth; 
+        static int height; 
+        int my = 2;
+        //static int my ;
+    public:
+        static void print(){ //a function that belongs to the class rather than any specific object of the class.so it can called with class like classname::function name
+            cout << "The value of the length is: " << length << endl;  //it has accese to only static data memebers and function .
+            cout << "The value of the breadth is: " << breadth << endl; 
+            cout << "The value of the height is: " << height << endl; 
+            //cout <<my<<endl; // this will cause a problem .say we removed the comment from that static int my add gave it value of 2 by Box::my =2 then commented int my = 2  then we crun this work ..so from this we understand it can access only ststsic data members 
+        }
+
+        static int sum();
+}; 
+int Box :: length = 10; 
+int Box :: breadth = 20; 
+int Box :: height = 30;
+//int Box::my = 2;
+
+int Box::sum(){
+    cout << height + breadth + length <<endl;///we can declare inside the class also out side jsut by Box:: function name () {.................}
+    return 0;
+}
+
+int main(){
+
+    Box b; 
+    cout << "Static member function is called through Object name: \n" << endl; 
+    b.print(); //static memeber function can also be called using normal objects.
+
+    cout << "\nStatic member function is called through Class name: \n" << endl; 
+    Box::print();
+    
+    Box::sum();
+
+    return 0; 
+}
+
+
+
+
+#include <iostream>
+using namespace std;
+class Test {
+    int x, y;
+    public:
+
+    /*
+
+    for method chaining
+    
+    Syntax:
+        ClassName& functionName() {
+            return *this;
+        }
+    
+    */
+
+        Test(int x = 0, int y = 0) {
+            this->x = x;// this-> used for name confite as it have class memeber and valriable can have smae name . this-> refere to the current calling object this a hidden pointer
+            this->y = y;
+        }
+        Test& setX(int a) {
+            x = a;
+            return *this;//here we deference this pointer because this it pointing a box that is holds  the class ka object the if return  just return this we send the ptr address but we tabve to send the onbject address so that we can work on it for chaining .so return type is class name& here & mean adrees is return type  .so by deference we send this ka inside the adrres of  the obj cueenting wokring   
+        }
+        Test& setY(int b) {
+            y = b;
+            return *this;
+        }
+
+        void print() {
+            cout << "x = " << x << " y = " << y << endl;
+        };
+};
+
+
+main() {
+    Test obj;
+    obj.setX(10).setY(20).print();//as here we want the obje ct the location then wee call the fanction using . dot operarted 
+}
+
+
+
+
+#include <iostream>
+using namespace std;
+
+class Test {
+    public:
+        int a;
+        Test(){
+            a = 10;
+            std::cout << "Constructor is executed\n"<<this<<endl;
+        }
+        ~Test() { 
+            std::cout << "Destructor is executed\n "<<this<<endl; 
+        }
+};
+
+int main(){
+
+
+    Test a;
+
+    //static Test b;
+
+    Test b; // as we can see the output in this form that the object called lattest is destriod first and then the oldest destrocted is called after that .here b dedstructor is called first then a .as a is construdec forst and b n
+
+    return 0;
+}
