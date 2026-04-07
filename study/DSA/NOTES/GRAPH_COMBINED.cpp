@@ -6,8 +6,8 @@
 using namespace std;
 
 /* =========================
-   ADJACENCY LIST GRAPH
-   ========================= */
+ADJACENCY LIST GRAPH
+========================= */
 class GraphList {
     unordered_map<char, unordered_set<char>> adj;
     unordered_map<char, char> parent;
@@ -231,8 +231,8 @@ public:
 
 
 /* =========================
-   WEIGHTED GRAPH
-   ========================= */
+WEIGHTED GRAPH
+========================= */
 class WeightedGraph {
     unordered_map<char, vector<pair<char,int>>> adj;
     bool directed;
@@ -256,7 +256,7 @@ public:
         if(!directed)
             adj[v].push_back({u, w});
         cout << "Edge " << u << (directed?" -> ":" -- ") << v
-             << " (weight=" << w << ") added.\n";
+            << " (weight=" << w << ") added.\n";
     }
 
     void display(){
@@ -275,8 +275,8 @@ public:
 
 
 /* =========================
-   MATRIX GRAPH
-   ========================= */
+MATRIX GRAPH
+========================= */
 class GraphMatrix {
     vector<vector<int>> mat;
     vector<char> ver;
@@ -286,8 +286,8 @@ class GraphMatrix {
 public:
     GraphMatrix(int size, bool isDirected = false)
         : n(size), directed(isDirected),
-          mat(size, vector<int>(size, 0)),
-          ver(size, '?') {}
+        mat(size, vector<int>(size, 0)),
+        ver(size, '?') {}
 
     void set_vertex(int i, char v){ ver[i] = tolower(v); }
 
@@ -370,12 +370,12 @@ const string SEP = string(42, '-');
 
 void printMainMenu(){
     cout << "\n" << SEP
-         << "\n 1. List Graph"
-         << "\n 2. Matrix Graph"
-         << "\n 3. Weighted Graph"
-         << "\n 0. Exit"
-         << "\n" << SEP
-         << "\nChoice: ";
+        << "\n 1. List Graph"
+        << "\n 2. Matrix Graph"
+        << "\n 3. Weighted Graph"
+        << "\n 0. Exit"
+        << "\n" << SEP
+        << "\nChoice: ";
 }
 
 bool askDirected(){
@@ -429,8 +429,8 @@ void weightedMenu(){ cout
 
 
 /* =========================
-   MAIN
-   ========================= */
+MAIN
+========================= */
 int main(){
     int choice;
     while(true){
