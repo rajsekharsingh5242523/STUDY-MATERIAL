@@ -2495,7 +2495,6 @@ int main(){
 
 
 
-
 #include <iostream>
 #include <unordered_set>
 #include <unordered_map>
@@ -2504,151 +2503,131 @@ int main(){
 
 using namespace std;
 
-class graph{
+class graph {
     private:
-        unordered_map<char,unordered_set<char>>adjlist;
+        unordered_map<char, unordered_set<char>> adjlist;
 
     public:
 
-        void display(){
-            for(auto keys:adjlist){
-                cout <<keys.first<<" : [ ";
-                for(auto neighbours:keys.second){
-                    cout << neighbours<<" ";
-                };            
-                cout <<"]"<<endl;  
+        void display() {
+            for (auto keys : adjlist) {
+                cout << keys.first << " : [ ";
+                for (auto neighbours : keys.second) {
+                    cout << neighbours << " ";
+                }
+                cout << "]" << endl;
             }
         }
 
-        int add_vertex(char vertex){
-            if(adjlist.count(tolower(vertex))==0){
+        int add_vertex(char vertex) {
+            if (adjlist.count(tolower(vertex)) == 0) {
                 adjlist[tolower(vertex)];
                 return 1;
-            };
+            }
             return 0;
         }
 
-
-        int  add_edge(char v1,char v2){
-            if(adjlist.count(tolower(v1))!= 0 && adjlist.count(tolower(v2))!= 0){
-                adjlist[tolower(v1)].insert(tolower(v2)); //here adjlist[v1] returns the unordered_set of v1 then as we git the set then we are using the property of set to insert v2 in the set of v1 and same for v2
+        int add_edge(char v1, char v2) {
+            if (adjlist.count(tolower(v1)) != 0 && adjlist.count(tolower(v2)) != 0) {
+                adjlist[tolower(v1)].insert(tolower(v2));
                 adjlist[tolower(v2)].insert(tolower(v1));
                 return 1;
-            };
+            }
             return 0;
         }
 
-
-        int remove_edge(char v1,char v2){
-            if(adjlist.count(tolower(v1))!= 0 && adjlist.count(tolower(v2))!= 0){
-                adjlist[tolower(v1)].erase(tolower(v2)); //here adjlist[v1] returns the unordered_set of v1 then as we git the set then we are using the property of set to erase v2 in the set of v1 and same for v2
+        int remove_edge(char v1, char v2) {
+            if (adjlist.count(tolower(v1)) != 0 && adjlist.count(tolower(v2)) != 0) {
+                adjlist[tolower(v1)].erase(tolower(v2));
                 adjlist[tolower(v2)].erase(tolower(v1));
                 return 1;
-            };
+            }
             return 0;
-        } 
-        
-        int remove_vertex(char vertex){
-            if(adjlist.count(tolower(vertex)) !=0){
-                adjlist.erase(tolower(vertex));
-                return 1;
-        }
-        return 0;
         }
 
-        int remove_edge(char vertex){
-            if (adjlist.count(tolower(vertex)) !=0){
-                for(auto neighbour:adjlist.at(tolower(vertex))){
-                    adjlist[neighbour].erase(tolower(vertex));
+        // ✅ FIX 1: remove_vertex now cleans up neighbors first
+        int remove_vertex(char vertex) {
+            vertex = tolower(vertex);
+            if (adjlist.count(vertex) != 0) {
+                for (auto neighbour : adjlist.at(vertex)) {
+                    adjlist[neighbour].erase(vertex); // remove this vertex from all neighbors
                 }
-                adjlist.erase(tolower(vertex));
+                adjlist.erase(vertex);
                 return 1;
-        }
-        return 0;
+            }
+            return 0;
         }
 
-        unordered_set <char> answer;
-
-        void DFS(char startchar){
-            cout << "DFS: ";
+        // ✅ FIX 2: DFS visited set is now local, passed by reference
+        void DFS_helper(char startchar, unordered_set<char>& visited) {
             startchar = tolower(startchar);
-            cout << startchar<<" ";
-            answer.insert(startchar);
-            for(auto right : adjlist.at(startchar)){
-                if(answer.count(right) == 0){
-                    DFS(right);
+            cout << startchar << " ";
+            visited.insert(startchar);
+            for (auto right : adjlist.at(startchar)) {
+                if (visited.count(right) == 0) {
+                    DFS_helper(right, visited);
                 }
             }
-            
         }
 
+        // ✅ Clean public wrapper for DFS
+        void DFS(char startchar) {
+            cout << "DFS: ";
+            unordered_set<char> visited;  // resets every time DFS is called
+            DFS_helper(startchar, visited);
+            cout << endl;
+        }
 
-        void BFS(char startchar){
+        void BFS(char startchar) {
             startchar = tolower(startchar);
-            cout <<"BFS: ";
-            unordered_set <char> bfsanswer;
-            queue <char>q;
+            cout << "BFS: ";
+            unordered_set<char> bfsanswer;
+            queue<char> q;
             q.push(startchar);
             bfsanswer.insert(startchar);
-            while(!q.empty() ){
+            while (!q.empty()) {
                 char current = q.front();
                 q.pop();
                 cout << current << " ";
-                for(auto right : adjlist.at(current)){
-                    if( bfsanswer.count(right) == 0){
+                for (auto right : adjlist.at(current)) {
+                    if (bfsanswer.count(right) == 0) {
                         q.push(right);
                         bfsanswer.insert(right);
                     }
-                    
                 }
             }
-
+            cout << endl;
         }
-
-
-
-
 };
 
-
-
-int main (){
-    cout <<"hello world"<<endl;
-
+int main() {
     graph *mygraph = new graph();
-    mygraph->add_vertex('A');
-    mygraph->add_vertex('B'); 
-    mygraph->add_vertex('C'); 
-    mygraph->add_vertex('D'); 
-    mygraph->add_vertex('E'); 
-    mygraph->add_vertex('F'); 
-    mygraph->add_vertex('G'); 
+    mygraph->add_vertex('1');
+    mygraph->add_vertex('2');
+    mygraph->add_vertex('3');
+    mygraph->add_vertex('4');
+    mygraph->add_vertex('5');
+    mygraph->add_vertex('6');
+    mygraph->add_vertex('7');
 
-
-    mygraph->add_edge('A','B');
-    mygraph->add_edge('A','C');
-    mygraph->add_edge('A','D');
-    mygraph->add_edge('B','C');
-    mygraph->add_edge('C','B');
-    mygraph->add_edge('C','E');
-    mygraph->add_edge('D','E');
-    mygraph->add_edge('E','F');
-    mygraph->add_edge('E','G');
-
+    mygraph->add_edge('1', '2');
+    mygraph->add_edge('1', '3');
+    mygraph->add_edge('1', '4');
+    mygraph->add_edge('2', '3');
+    mygraph->add_edge('3', '4');
+    mygraph->add_edge('3', '5');
+    mygraph->add_edge('4', '1');
+    mygraph->add_edge('4', '3');
+    mygraph->add_edge('5', '6');
+    mygraph->add_edge('5', '7');
 
     mygraph->display();
+    mygraph->BFS('1');
+    mygraph->DFS('1');
 
-    //mygraph->remove_edge('A','D');
-    //mygraph->remove_edge('C','D');
-    //mygraph->remove_edge('B','D');
-
-    //mygraph->display();
-    mygraph->BFS('A');
-    mygraph->DFS('A');
-
+    delete mygraph; // ✅ good practice to free heap memory
     return 0;
 }
-
 //-------------------------------------------------------------------------------------
 
 //# =============================================================

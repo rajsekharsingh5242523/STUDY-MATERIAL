@@ -993,3 +993,50 @@ int main(){
 
     return 0;
 }
+
+
+# ----------------------------------
+Generic Programming
+# <iostream>
+using namespace std; 
+
+template <class myType> 
+myType GetMax (myType a, myType b){ 
+    return (a>b?a:b); 
+}
+
+int main () {
+    int x,y; 
+    GetMax <int> (x,y);
+}
+
+
+
+
+#include <iostream> 
+using namespace std; 
+template <class T, class U> 
+bool are_equal (T a, U b) { 
+return (a==b); 
+} 
+int main () { 
+if (are_equal(10,10.0)) 
+cout << "x and y are equal\n"; 
+else 
+cout << "x and y are not equal\n"; 
+return 0; 
+}
+
+
+// template arguments 
+#include <iostream>
+using namespace std;
+template <class T, int N>
+T fixed_multiply (T val, int N) {
+return val * N;
+}
+int main() {
+cout << fixed_multiply<int,2>(10) << '\n';
+cout << fixed_multiply<float,3>(10.5) << '\n';
+}
+
