@@ -1,5 +1,5 @@
-class TestArrayArguments {
-public static void main(String[] args) {
+class Main {
+static void main(String[] args) {
 int x = 1; 
 int[] y = new int[10]; 
 m(x, y); // Invoke m with arguments x and y
