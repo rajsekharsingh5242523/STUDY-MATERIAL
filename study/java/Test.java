@@ -1,4 +1,3 @@
-package java;
 import java.util.Scanner;
 
 public class Test{
@@ -263,6 +262,236 @@ public class Main {
             System.out.println("The digits of " + originalN + " do not form an arithmetic sequence.");
         }
         
+        scanner.close();
+    }
+}
+
+
+import java.util.*;
+
+class ArrayConcatenator{
+
+
+    public ArrayConcatenator(int[]a,int[]b) {
+
+        int num1 = a.length;
+        int num2 = b.length;
+
+        int [] answer = new int[num1 + num2];
+        int i = 0;
+        for(int j = 0 ; j< num1;j++){
+            answer[i] = a[j];
+            i++;
+        };
+        for(int k = 0 ;k < num2;k++){
+            answer[i] = b[k];
+            i++;
+        };
+
+        for(int  e  : answer){
+            System.out.print(e+' ');
+        }
+
+    }
+
+    void displayResult(){
+        return;
+    }
+    
+};
+
+
+class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int n = Integer.parseInt(sc.nextLine());
+        int[] arr1 = new int[n];
+        String[] firstLine = sc.nextLine().trim().split("\\s+");
+        for (int i = 0; i < n; i++) {
+            arr1[i] = Integer.parseInt(firstLine[i]);
+        }
+
+        int m = Integer.parseInt(sc.nextLine());
+        int[] arr2 = new int[m];
+        String[] secondLine = sc.nextLine().trim().split("\\s+");
+        for (int i = 0; i < m; i++) {
+            arr2[i] = Integer.parseInt(secondLine[i]);
+        }
+
+        ArrayConcatenator concatenator = new ArrayConcatenator(arr1, arr2);
+        concatenator.displayResult();
+    }
+}
+
+
+
+import java.util.Scanner;
+
+class TemperatureSensor{
+    
+        String sensorid;
+        double temperature;
+        static int sensorCount ;
+
+        TemperatureSensor(String id , double num){
+            this.sensorid = id;
+            this.temperature = num;
+            sensorCount++;
+        }
+
+        void displayTemperature(){
+            System.out.printf("Sensor ID: %s | Temperature: %.2f C \n", this.sensorid, this.temperature);
+         
+            if(this.temperature > 40){
+                System.out.println("  Status: HIGH ALERT!");
+            }else if(this.temperature < 10){
+                System.out.println("  Status: LOW ALERT!");
+            }else{
+                System.out.println("  Status: Normal");
+            }
+
+        }
+
+        static int getSensorCount(){
+            return sensorCount;
+        }
+        
+        
+    }
+
+
+public class Main {
+    
+    
+    public static void main(String[] args){
+
+        Scanner input = new Scanner(System.in);
+        
+        String id1 = input.nextLine();
+        double temp1 = input.nextDouble();
+        input.nextLine();
+        
+        String id2 = input.nextLine();
+        double temp2 = input.nextDouble();
+        input.nextLine();
+        
+        String id3 = input.nextLine();
+        double temp3 = input.nextDouble();
+        
+        TemperatureSensor sensor1 = new TemperatureSensor(id1,temp1);
+        TemperatureSensor sensor2 = new TemperatureSensor(id2,temp2);
+        TemperatureSensor sensor3 = new TemperatureSensor(id3,temp3);
+        
+        
+        sensor1.displayTemperature();
+        sensor2.displayTemperature();
+        sensor3.displayTemperature();
+        
+        System.out.println("Total Sensors Created: "+TemperatureSensor.getSensorCount());
+
+        input.close();
+
+    }
+
+
+
+}
+
+
+
+
+import java.util.*;
+
+class Main{
+
+    
+
+    public static void main(String[] args){
+
+        Scanner input = new Scanner(System.in);
+        int user = input.nextInt();
+
+        int holder = Fibonacci(user);
+        System.out.println(holder);
+
+
+        int num = holder;
+        int sum = 0; 
+        while(num > 0 ){
+            int digit  = num % 10 ;
+            sum += digit;
+            num /= 10;
+        }
+
+        if(holder % 2 == 0 ){
+            System.out.printf("Odd, Digit Sum: %d",sum);
+        }else{
+            System.out.printf("Even, Digit Sum: %d",sum);
+        }
+    };
+
+    public static int Fibonacci (int num ){
+
+        if(num == 0 ){
+            return 0;
+        }else if (num == 1 ){
+            return 1;
+        }else{
+            return Fibonacci(num-1) + Fibonacci(num-2);
+        }
+
+    };
+
+
+}
+
+
+
+import java.util.*;
+
+class NumberClassifier{
+
+    int[] master ;
+
+    void setData(int[] arrholder,int size){
+
+        master = new int[size];
+        for(int i = 0 ; i <size ;i ++){
+            master[i] = arrholder[i];
+        }
+    };
+
+    void classifyAndPrint(){
+
+        System.out.println("Even numbers:");
+        for (int e : master){
+            if( e %2 ==0){
+                System.out.print(e+" ");
+            }
+        }
+        System.out.print("\n");
+        System.out.println("Odd numbers:");
+        for(int e  : master){    
+            if( e %2 != 0){
+                System.out.print(e+" ");
+            }
+        }
+    };
+};
+
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        int[] numbers = new int[n];
+        for (int i = 0; i < n; i++) {
+            numbers[i] = scanner.nextInt();
+        }
+        NumberClassifier classifier = new NumberClassifier();
+        classifier.setData(numbers, n);
+        classifier.classifyAndPrint();
         scanner.close();
     }
 }
